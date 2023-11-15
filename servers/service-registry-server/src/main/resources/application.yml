@@ -7,7 +7,8 @@ spring:
 
 ---
 # configuration: common
-
+server:
+   port: 8761
    
 ---
 # configuration: development
@@ -21,6 +22,18 @@ logging:
       console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
    level:
       root: INFO
+
+eureka:
+   instance:
+      hostname: localhost
+   server:
+      enableSelfPreservation: false
+      waitTimeInMsWhenSyncEmpty: 5        
+   client:
+      fetchRegistry: false
+      registerWithEureka: false
+      serviceUrl:
+         defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
       
 ---
 # configuration: production
@@ -41,4 +54,15 @@ logging:
       name: logs/${spring.application.name}.log
    level:
       root: WARN
-                     
+ 
+eureka:
+   instance:
+      hostname: 192.168.0.172
+   server:
+      enableSelfPreservation: false
+      waitTimeInMsWhenSyncEmpty: 5        
+   client:
+      fetchRegistry: false
+      registerWithEureka: false
+      serviceUrl:
+         defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka                    
