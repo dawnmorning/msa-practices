@@ -15,31 +15,40 @@ import org.springframework.web.client.RestTemplate;
 
 import com.poscodx.emaillist.vo.EmailListVo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
-@RequestMapping("/api/emaillist")
 @SuppressWarnings("unchecked")
+@RequestMapping("/api")
 public class ApiController {
-
-	private final RestTemplate restTemplate;
-
-	public ApiController(@LoadBalanced RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-	}
-
-	@GetMapping
-	public ResponseEntity<?> read(@RequestParam(value = "kw", required = true, defaultValue = "") String keyword) {
-
-		Map<String, Object> response = restTemplate.getForObject("http://service-emaillist/?kw=" + keyword, Map.class);
-		return ResponseEntity.status(HttpStatus.OK).body(response);
-	}
-
-	@PostMapping
-	public ResponseEntity<?> insert(@RequestBody EmailListVo emailListVo) {
-		System.out.println(emailListVo);
-		Map<String, Object> response = restTemplate.postForObject("http://service-emaillist/",emailListVo, Map.class);
-	
-			return ResponseEntity.status(HttpStatus.OK).body(response);
-		 
-	}
-
+   private final RestTemplate restTemplate;
+   
+   
+   public ApiController(@LoadBalanced RestTemplate restTemplate) {
+      this.restTemplate = restTemplate;
+   }
+   
+   @GetMapping
+   public ResponseEntity<?> read(@RequestParam(value="kw", required=true, defaultValue="") String keyword) {
+      log.info("Request[GET /api]:"+ keyword);
+      
+      
+      Map<String, Object> response = restTemplate.getForObject("http://service-emaillist/?kw=" + keyword, Map.class);
+      return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(response);
+   }
+   
+   @PostMapping
+   public ResponseEntity<?> create(@RequestBody EmailListVo vo) {
+      log.info("Request[POST /api]:" + vo);
+      
+      Map<String, Object> response = restTemplate.postForObject("http://service-emaillist/", vo, Map.class);
+      
+      return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(response);
+   }
+   
 }
