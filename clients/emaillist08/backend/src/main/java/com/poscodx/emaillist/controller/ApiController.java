@@ -22,33 +22,29 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings("unchecked")
 @RequestMapping("/api")
 public class ApiController {
-   private final RestTemplate restTemplate;
-   
-   
-   public ApiController(@LoadBalanced RestTemplate restTemplate) {
-      this.restTemplate = restTemplate;
-   }
-   
-   @GetMapping
-   public ResponseEntity<?> read(@RequestParam(value="kw", required=true, defaultValue="") String keyword) {
-      log.info("Request[GET /api]:"+ keyword);
-      
-      
-      Map<String, Object> response = restTemplate.getForObject("http://service-emaillist/?kw=" + keyword, Map.class);
-      return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(response);
-   }
-   
-   @PostMapping
-   public ResponseEntity<?> create(@RequestBody EmailListVo vo) {
-      log.info("Request[POST /api]:" + vo);
-      
-      Map<String, Object> response = restTemplate.postForObject("http://service-emaillist/", vo, Map.class);
-      
-      return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(response);
-   }
-   
+	private final RestTemplate restTemplate;
+
+	public ApiController(@LoadBalanced RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
+	
+	@GetMapping
+	public ResponseEntity<?> read(@RequestParam(value="kw", required=true, defaultValue="") String keyword) {
+		log.info("Request[GET /api]:"+ keyword);
+
+		Map<String, Object> response = restTemplate.getForObject("http://service-emaillist/?kw=" + keyword, Map.class);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(response);
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> create(@RequestBody EmailListVo vo) {
+		log.info("Request[POST /api]:" + vo);
+		
+		Map<String, Object> response = restTemplate.postForObject("http://service-emaillist/", vo, Map.class);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(response);
+	}
 }

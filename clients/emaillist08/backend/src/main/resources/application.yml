@@ -23,6 +23,7 @@ spring:
       suffix : .html
       cache : false
 
+
 ---
 # development profile: spring boot configuration
 spring:
@@ -32,7 +33,7 @@ spring:
 
    devtools:
       livereload:
-         enabled: true                 
+         enabled: true
    
 server:
    port: 8080
@@ -41,6 +42,7 @@ server:
       encoding:
          charset: utf-8
          enabled: true
+         
 logging:
    pattern:
       console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
@@ -53,6 +55,7 @@ eureka:
       registerWithEureka: false
       serviceUrl:
          defaultZone: http://localhost:8761/eureka
+         
 ---
 # production profile: spring boot configuration
 spring:
@@ -66,7 +69,7 @@ server:
       context-path: /
       encoding:
          charset: UTF-8
-         enabled: true         
+         enabled: true
 
 logging:
    pattern:
@@ -82,13 +85,12 @@ logging:
       root: WARN
       com:
          poscodx:
-             emaillist:
-                exception: ERROR
-        
-         
+            emaillist:
+               exception: ERROR
+
 eureka:
    client:
       fetchRegistry: true
       registerWithEureka: false
       serviceUrl:
-         defaultZone: http://localhost:8761/eureka         
+         defaultZone: http://192.168.0.143:8761/eureka

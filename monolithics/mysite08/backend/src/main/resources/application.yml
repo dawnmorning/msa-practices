@@ -1,42 +1,35 @@
 spring:
    application:
-      name: mysite07
+      name: mysite08
    profiles:
       active: development
 
+      
 ---
-# common configuration
-mysite:
-   static:
-      pathBase: /assets
+# configuration: common
 
-spring:
+spring:      
    mvc:
-      static-path-pattern: ${mysite.static.pathBase}/**
+      static-path-pattern: /assets/**
       throw-exception-if-no-handler-found: true
    web:
       resources:
-         static-locations: classpath:${mysite.static.pathBase}, file:${mysite.upload.location}
+         static-locations: classpath:/assets/
    thymeleaf:
-      prefix: classpath:templates/
+      prefix : classpath:templates/
       check-template-location: true
       mode: HTML
-      suffix: .html
-      cache: false
+      suffix : .html
+      cache : false
    servlet:
       multipart:
          enabled: true
          max-file-size: 20MB
          max-request-size: 100MB
-mybatis:
-   config-location: classpath:mybatis/configuration.xml
 
-         
+
 ---
-# development configuration
-mysite:
-   upload:
-      location: /mysite-uploads
+# configuration: development
 
 spring:
    config:
@@ -45,11 +38,7 @@ spring:
    devtools:
       livereload:
          enabled: true
-   datasource:
-      driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://192.168.0.143:3307/webdb?characterEncoding=utf8
-      username: webdb
-      password: webdb   
+
 server:
    port: 8080
    servlet:
@@ -57,28 +46,28 @@ server:
       encoding:
          charset: UTF-8
          enabled: true
+
 logging:
    pattern:
       console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
    level:
-      root: INFO         
+      root: INFO
 
+eureka:
+   client:
+      fetchRegistry: true
+      registerWithEureka: false
+      serviceUrl:
+         defaultZone: http://localhost:8761/eureka  
 
 ---
-# production profile configuration
-mysite:
-   upload:
-      location: /mysite-uploads
+# configuration: production
 
 spring:
    config:
       activate:
-         on-profile: production
-   datasource:
-      driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://192.168.0.143:3307/webdb?characterEncoding=utf8
-      username: webdb
-      password: webdb   
+         on-profile: production             
+
 server:
    port: 8082
    servlet:
@@ -86,6 +75,7 @@ server:
       encoding:
          charset: UTF-8
          enabled: true
+
 logging:
    pattern:
       file: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n"
@@ -98,7 +88,15 @@ logging:
       name: logs/${spring.application.name}.log
    level:
       root: WARN
-      com:
-         poscodx:
+      me:
+         kickscar:
             mysite:
                exception: ERROR
+
+eureka:
+   client:
+      fetchRegistry: true
+      registerWithEureka: false
+      serviceUrl:
+         defaultZone: http://192.168.0.172:8761/eureka
+               

@@ -10,7 +10,7 @@ function App() {
 
   const getEmail = async (keyword) => {
     try {
-      const res = await fetch(`/api?kw=${keyword ? keyword : ""}`, {
+      const res = await fetch(`/?kw=${keyword ? keyword : ""}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

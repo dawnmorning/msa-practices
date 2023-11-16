@@ -48,7 +48,7 @@ module.exports = function (env) {
       compress: true,
       hot: false,
       proxy: {
-        "/api/emaillist": "http://localhost:8080/",
+        "/api": "http://localhost:8080",
       },
       static: {
         directory: path.resolve("./public"),
